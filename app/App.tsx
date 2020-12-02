@@ -12,6 +12,8 @@ import {
 
 import Routes from './src/routes';
 
+import AppContext from './src/hooks';
+
 const App = () => {
   let [fontsLoaded] = useFonts({
     Poppins_600SemiBold, 
@@ -25,10 +27,12 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <StatusBar style="light" backgroundColor="#2C5530" />
-      <Routes />
-    </NavigationContainer>
+    <AppContext>
+      <NavigationContainer>
+        <StatusBar style="light" backgroundColor="#2C5530" />
+        <Routes />
+      </NavigationContainer>
+    </AppContext>
   );
 }
 

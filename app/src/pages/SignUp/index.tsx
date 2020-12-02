@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image, Keyboard, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 import Input from '../../components/Input';
 
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useAuth } from '../../hooks/auth';
 
 import LogoImage from '../../assets/invertedLogo.png';
 
@@ -31,6 +32,11 @@ interface SignUpFormData {
 
 const SignUp: React.FC = () => {
   const { goBack, canGoBack } = useNavigation();
+  const { signUp } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const formRef = useRef<FormHandles>(null);
 
   const emailInputRef = useRef<TextInput>(null);
@@ -38,7 +44,9 @@ const SignUp: React.FC = () => {
 
   const handleSubmitForm = useCallback(async (data: SignUpFormData) => {
     try {
+      setError('');
       formRef.current?.setErrors({});
+      setIsLoading(true);
 
       const schema = Yup.object().shape({
         name: Yup.string().required('Nome obrigatório'),
@@ -52,24 +60,28 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
 
-      // await api.post('users', data);
+      await signUp(data);
 
       console.log('Cadastrado');
 
     } catch (err) {
+      setIsLoading(false);
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
 
         Keyboard.dismiss();
+        setError('Preencha todos os campos')
 
         return;
       }
 
       console.log('Ocorreu um erro no cadastro');
+      console.log(err);
+      setError('Ocorreu um erro, cheque suas credenciais e tente novamente');
     }
-  }, []);
+  }, [signUp]);
 
   return (
     <Container>
@@ -81,7 +93,9 @@ const SignUp: React.FC = () => {
         />
       </LogoContainer>
       <FormContainer>
-        <Title>Conheça nossa plataforma</Title>
+        <Title>
+          {error.length > 1 ? error : 'Conheça nossa plataforma'}
+        </Title>
         <Form ref={formRef} onSubmit={handleSubmitForm}>
           <Input 
             name="name" 
@@ -118,8 +132,15 @@ const SignUp: React.FC = () => {
         </Form>
         
         <Button onPress={() => formRef.current?.submitForm()}>
-          <Feather name="send" color="#fafafa" size={24} />
-          <ButtonText>Criar conta</ButtonText>
+          {isLoading 
+            ? <ButtonText>Entrando...</ButtonText>
+            : (
+              <>
+                <Feather name="send" color="#fafafa" size={24} />
+                <ButtonText>Criar conta</ButtonText>
+              </>
+            )
+          }
         </Button>
       </FormContainer>
     </Container>

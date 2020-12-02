@@ -32,6 +32,7 @@ export const Title = styled.Text`
   font-family: 'Poppins_600SemiBold';
   font-size: 24px;
   color: #263026;
+  text-align: center;
   
   margin-bottom: 24px;
 `;

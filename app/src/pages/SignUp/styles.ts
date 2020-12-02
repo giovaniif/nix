@@ -32,6 +32,7 @@ export const Title = styled.Text`
   font-family: 'Poppins_600SemiBold';
   font-size: 24px;
   color: #263026;
+  text-align: center;
   
   margin-bottom: 12px;
 `;
@@ -45,6 +46,8 @@ export const Button = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   flex-direction: row;
+
+  margin-top: 18px;
 `;
 
 export const ButtonText = styled.Text`

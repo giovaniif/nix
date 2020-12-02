@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image, Keyboard, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 import Input from '../../components/Input';
 
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useAuth } from '../../hooks/auth';
 
 import LogoImage from '../../assets/invertedLogo.png';
 
@@ -30,14 +31,23 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const { goBack, canGoBack } = useNavigation();
+  const { signIn, user } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const formRef = useRef<FormHandles>(null);
 
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
+  console.log(user);
+
   const handleSubmitForm = useCallback(async (data: SignInFormData) => {
     try {
+      setError('');
       formRef.current?.setErrors({});
+      setIsLoading(true);
 
       const schema = Yup.object().shape({
         email: Yup.string()
@@ -50,22 +60,26 @@ const SignIn: React.FC = () => {
         abortEarly: false,
       });
 
-      // await api.post('users', data);
+      await signIn(data);
 
       console.log('Cadastrado');
-
     } catch (err) {
+      setIsLoading(false);
+
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
         formRef.current?.setErrors(errors);
 
         Keyboard.dismiss();
+        setError('Preencha todos os campos')
 
         return;
       }
 
-      console.log('Ocorreu um erro no cadastro');
+      console.log('Ocorreu um erro no login');
+      console.log(err);
+      setError('Ocorreu um erro, tente novamente')
     }
   }, []);
 
@@ -79,7 +93,9 @@ const SignIn: React.FC = () => {
         />
       </LogoContainer>
       <FormContainer>
-        <Title>Faça seu login</Title>
+        <Title>
+        {error.length > 1 ? error : 'Faça seu login'}
+        </Title>
         <Form ref={formRef} onSubmit={handleSubmitForm}>
           <Input 
             ref={emailInputRef}
@@ -104,8 +120,15 @@ const SignIn: React.FC = () => {
         </Form>
         
         <Button onPress={() => formRef.current?.submitForm()}>
-          <Feather name="log-in" color="#fafafa" size={24} />
-          <ButtonText>Entrar</ButtonText>
+          {isLoading 
+            ? <ButtonText>Entrando...</ButtonText>
+            : (
+              <>
+                <Feather name="log-in" color="#fafafa" size={24} />
+                <ButtonText>Entrar</ButtonText>
+              </>
+            )
+          }
         </Button>
       </FormContainer>
     </Container>
