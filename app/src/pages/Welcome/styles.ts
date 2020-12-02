@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: #fafafa;
+  background-color: #2C5530;
 `;
 
 export const ContentContainer = styled.View`
@@ -20,7 +20,7 @@ export const Title = styled.Text`
   text-align: center;
   font-size: 34px;
   font-family: 'Poppins_600SemiBold';
-  color: #131813;
+  color: #fafafa;
 
   margin-top: 18px;
   margin-bottom: 10px;
@@ -29,7 +29,7 @@ export const Title = styled.Text`
 export const SubTitle = styled.Text`
   font-size: 28px;
   font-family: 'Poppins_400Regular';
-  color: #263026;
+  color: #fafafa;
 
   text-align: center;
 `;
@@ -40,6 +40,10 @@ export const ButtonsContainer = styled.View`
   align-items: center;
 
   padding: 0 14px;
+  background-color: #fafafa;
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
+  z-index: 4;
 `;
 
 export const Link = styled.TouchableOpacity`

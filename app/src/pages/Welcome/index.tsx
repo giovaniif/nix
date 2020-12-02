@@ -4,7 +4,7 @@ import * as Animatable from 'react-native-animatable';
 
 import Button from '../../components/Button';
 
-import logoImage from '../../assets/logo.png';
+import logoImage from '../../assets/invertedLogo.png';
 
 import { 
   Container, 
