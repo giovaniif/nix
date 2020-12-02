@@ -8,7 +8,7 @@ interface IHeaderProps {
   onPress(): void;
 }
 
-const Header: React.FC<IHeaderProps> = ({ onPress }) => {
+const SignInHeader: React.FC<IHeaderProps> = ({ onPress }) => {
   return (
     <Container>
       <TouchableOpacity
@@ -25,4 +25,4 @@ const Header: React.FC<IHeaderProps> = ({ onPress }) => {
   );
 }
 
-export default Header;
+export default SignInHeader;
