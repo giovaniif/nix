@@ -1,25 +1,19 @@
 import React from 'react';
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { AppLoading } from 'expo';
 
-import Welcome from '../pages/Welcome';
-import SignUp from '../pages/SignUp';
-import SignIn from '../pages/SignIn';
+import { useAuth } from '../hooks/auth';
 
-const Stack = createStackNavigator();
+import AppRouter from './app.routes';
+import AuthRouter from './auth.routes';
 
 const Routes: React.FC = () => {
-  return (
-    <Stack.Navigator 
-      screenOptions={{
-        headerShown: false,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-      }}
-    >
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="SignIn" component={SignIn} />
-    </Stack.Navigator>
-  )
-}
+  const { loading, user } = useAuth();
+
+  if (loading) {
+    return <AppLoading />
+  }
+
+  return user ? <AppRouter /> : <AuthRouter />
+};
 
 export default Routes;

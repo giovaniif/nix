@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 
-import Header from '../../components/Header';
+import Header from '../../components/SignInHeader';
 import Input from '../../components/Input';
 
 import getValidationErrors from '../../utils/getValidationErrors';
