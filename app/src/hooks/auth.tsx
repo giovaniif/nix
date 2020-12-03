@@ -34,6 +34,7 @@ interface AuthContextData {
   signUp(credentials: SignUpCredentials): Promise<void>;
   signOut(): void;
   loading: boolean;
+  setUser(user: IUserDTO): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -97,8 +98,20 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
+  const setUser = useCallback(async (user: IUserDTO) => {
+    setData(prev => {
+      const {token} = prev;
+      return {
+        user,
+        token
+      }
+    });
+
+    await AsyncStorage.setItem('@Nix:user', JSON.stringify(user));
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut, loading, signUp, token: data.token }}>
+    <AuthContext.Provider value={{ setUser, user: data.user, signIn, signOut, loading, signUp, token: data.token }}>
       {children}
     </AuthContext.Provider>
   );

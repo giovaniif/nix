@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppLoading } from 'expo';
 import { 
@@ -29,7 +29,7 @@ const App = () => {
   return (
     <AppContext>
       <NavigationContainer>
-        <StatusBar style="light" backgroundColor="#2C5530" />
+        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
         <Routes />
       </NavigationContainer>
     </AppContext>
