@@ -9,7 +9,7 @@ export const Container = styled.View`
   border-radius: 8px;
 `;
 
-export const Header = styled.View`
+export const Header = styled.TouchableOpacity`
   width: 100%;
   height: 60px;
 

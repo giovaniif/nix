@@ -1,5 +1,6 @@
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
 
@@ -33,10 +34,11 @@ const Post: React.FC<IPostData> = ({ children, handleLike, ...props }) => {
   } = props;
   
   const { user } = useAuth();
+  const { navigate } = useNavigation();
 
   return (
     <Container style={{ elevation: 2 }}>
-      <Header>
+      <Header onPress={() => navigate('OtherUser', { user_id: id_usuario })}>
         <UserPhoto source={foto_autor ? { uri: foto_autor } : logo} />
         <UserName>{nome_autor}</UserName>
       </Header>

@@ -3,10 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 import { Text } from 'react-native';
 
-import Feed from '../pages/Feed';
 import Recipes from '../pages/Recipes';
 
 import ProfileRoutes from './profile.routes';
+import FeedRoutes from './feed.routes';
 
 const Tabs = createBottomTabNavigator();
 
@@ -37,7 +37,7 @@ const AppRouter: React.FC = () => {
       />
       <Tabs.Screen 
         name="Feed" 
-        component={Feed} 
+        component={FeedRoutes} 
         options={{
           tabBarIcon: ({ focused }) => <Feather name="file-text" size={28} color={focused ? '#739E82' : '#d4d4d4'} />,
           tabBarLabel: () => (
