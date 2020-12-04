@@ -10,6 +10,7 @@
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.1.0",
     "@react-native-async-storage/async-storage": "^1.13.2",
+    "@react-native-community/checkbox": "^0.5.6",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
     "@react-navigation/native": "^5.8.10",
@@ -33,6 +34,7 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "10.7.0",
     "styled-components": "^5.2.1",
     "yup": "^0.31.1"
   },
