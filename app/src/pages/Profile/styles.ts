@@ -66,7 +66,6 @@ export const WhatsApp = styled.Text`
 
 export const Content = styled.View`
   flex: 3;
-  padding: 0 24px;
 
   background-color: #fafafa;
   border-top-left-radius: 24px;

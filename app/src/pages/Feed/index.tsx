@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, Text, RefreshControl, ToastAndroid, ActivityIndicator } from 'react-native';
+import { FlatList, Text, RefreshControl, ToastAndroid, ActivityIndicator, StatusBar } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -99,6 +99,7 @@ const Feed: React.FC = () => {
   return (
     <Container>
       <AppHeader />
+      <StatusBar barStyle="dark-content" backgroundColor="#fafafa" />
       <Content>
         {!isLoading ? posts.length > 0 ? (
           <FlatList
