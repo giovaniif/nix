@@ -14,7 +14,7 @@ import Post from '../../components/Post';
 import { Container, Content, PostButton } from './styles';
 
 const Feed: React.FC = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const { isLoading, posts, setPosts } = usePosts();
   const { navigate } = useNavigation();
 
@@ -107,6 +107,7 @@ const Feed: React.FC = () => {
             keyExtractor={(item) => item.id_post}
             renderItem={({ item }) => (
               <Post
+                shouldNavigateOnHeaderClick={!(user.id === item.id_usuario)}
                 handleLike={handleLike}
                 {...item}
               />

@@ -1,12 +1,13 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  width: 390px;
-  background-color: #fafafa;
+  width: 422px;
   margin-bottom: 12px;
 
+  background-color: #fafafa;
   padding: 18px;
-  border-radius: 8px;
+  border-bottom-width: 1px;
+  border-bottom-color: #ccc;
 `;
 
 export const Header = styled.TouchableOpacity`
@@ -50,13 +51,13 @@ export const PostText = styled.Text`
 `;
 
 export const PostImage = styled.Image`
-  height: 114px;
+  height: 222px;
   width: 100%;
 `;
 
 export const Actions = styled.View`
   width: 100%;
-  padding: 12px 0;
+  padding: 12px 0 0;
 
   flex-direction: row;
   justify-content: flex-start;
@@ -66,5 +67,4 @@ export const Actions = styled.View`
 export const LikeButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
-  padding: 4px;
 `;

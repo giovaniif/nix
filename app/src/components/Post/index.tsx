@@ -32,7 +32,7 @@ const Post: React.FC<IPostProps> = ({ children, handleLike, shouldNavigateOnHead
   const { navigate } = useNavigation();
 
   return (
-    <Container style={{ elevation: 2 }}>
+    <Container>
       <Header onPress={() => shouldNavigateOnHeaderClick && navigate('OtherUser', { user_id: id_usuario })}>
         <UserPhoto source={foto_autor ? { uri: foto_autor } : logo} />
         <UserName>{nome_autor}</UserName>
