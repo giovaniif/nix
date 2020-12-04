@@ -25,10 +25,11 @@ interface IPostData {
   foto_autor?: string;
   id_usuario: string;
   nome_autor: string;
-  handleLike(id_post: string): void;
+  handleLike?(id_post: string): void;
+  shouldNavigateOnHeaderClick?: boolean;
 }
 
-const Post: React.FC<IPostData> = ({ children, handleLike, ...props }) => {
+const Post: React.FC<IPostData> = ({ children, handleLike, shouldNavigateOnHeaderClick = true,...props }) => {
   const { 
     foto_autor, nome_autor, conteudo_post, foto_post, id_usuario, has_liked, id_post
   } = props;
@@ -38,7 +39,7 @@ const Post: React.FC<IPostData> = ({ children, handleLike, ...props }) => {
 
   return (
     <Container style={{ elevation: 2 }}>
-      <Header onPress={() => navigate('OtherUser', { user_id: id_usuario })}>
+      <Header onPress={() => shouldNavigateOnHeaderClick && navigate('OtherUser', { user_id: id_usuario })}>
         <UserPhoto source={foto_autor ? { uri: foto_autor } : logo} />
         <UserName>{nome_autor}</UserName>
       </Header>
@@ -50,7 +51,7 @@ const Post: React.FC<IPostData> = ({ children, handleLike, ...props }) => {
 
       {user.id !== id_usuario && (
         <Actions>
-          <LikeButton onPress={() => handleLike(id_post)}>
+          <LikeButton onPress={() => handleLike && handleLike(id_post)}>
             {has_liked ? (
               <MaterialIcons name="favorite" size={30} color="#348952" />
             ) : (

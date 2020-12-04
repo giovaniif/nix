@@ -1,9 +1,12 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, FlatList } from 'react-native';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
+import { api } from '../../client/api';
+
+import Post from '../../components/Post';
 
 import logoImage from '../../assets/invertedLogo.png';
 
@@ -18,9 +21,35 @@ import {
   WhatsApp,
 } from './styles';
 
+interface IPostData {
+  conteudo_post: string;
+  has_liked: boolean;
+  id_post: string;
+  foto_post?: string;
+  foto_user?: string;
+  id_usuario: string;
+  nome_autor: string;
+}
+
 const Profile: React.FC = () => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const { navigate } = useNavigation();
+
+  const [posts, setPosts] = useState<IPostData[]>([]);
+
+  useEffect(() => {
+    async function getUserInfo(): Promise<void> {
+      const { data: userPosts } = await api.get(`user/${user.id}/post`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+
+      if (userPosts.data.length && typeof userPosts.data !== 'string') {
+        setPosts(userPosts.data);
+      }
+    }
+
+    getUserInfo();
+  }, [token, user]);
 
   return (
     <Container>
@@ -44,6 +73,23 @@ const Profile: React.FC = () => {
           </View>
         )}
         {user.biografia && <Bio>{user.biografia}</Bio>}
+
+        {posts.length > 0 && (
+          <>
+            <Username style={{ marginTop: 24, fontFamily: 'Poppins_500Medium' }}>Posts</Username>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={posts}
+              keyExtractor={(item) => item.id_post}
+              renderItem={({ item }) => (
+                <Post
+                  shouldNavigateOnHeaderClick={false}
+                  {...item}
+                />
+              )}
+            />
+          </>
+        )}
       </Content>
     </Container>
   );

@@ -23,7 +23,6 @@ export const Bio = styled.Text`
   font-size: 18px;
   color: #131813;
   margin-top: 12px;
-  text-align: center;
 `;
 
 export const EditProfileButton = styled.TouchableOpacity`
@@ -38,13 +37,14 @@ export const AddBioText = styled.Text`
 `;
 
 export const ProfilePhoto = styled.Image`
-  height: 168px;
-  width: 168px;
+  height: 90px;
+  width: 90px;
   border-radius: 128px;
 
   background-color: #fcfcfc;
   position: absolute;
-  top: -120px;
+  top: -60px;
+  left: 36px;
 `;
 
 export const Username = styled.Text`
@@ -52,7 +52,7 @@ export const Username = styled.Text`
   font-family: 'Poppins_400Regular';
   color: #131813;
 
-  margin-top: 58px;
+  margin-top: 40px;
 `;
 
 export const WhatsApp = styled.Text`
@@ -66,7 +66,7 @@ export const WhatsApp = styled.Text`
 
 export const Content = styled.View`
   flex: 3;
-  align-items: center;
+  padding: 0 24px;
 
   background-color: #fafafa;
   border-top-left-radius: 24px;
