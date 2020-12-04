@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../client/api';
+import { IPostData } from '../../dtos/IPostData';
 
 import Post from '../../components/Post';
 
@@ -21,15 +22,6 @@ import {
   WhatsApp,
 } from './styles';
 
-interface IPostData {
-  conteudo_post: string;
-  has_liked: boolean;
-  id_post: string;
-  foto_post?: string;
-  foto_user?: string;
-  id_usuario: string;
-  nome_autor: string;
-}
 
 const Profile: React.FC = () => {
   const { user, token } = useAuth();

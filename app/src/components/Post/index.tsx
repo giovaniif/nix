@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../hooks/auth';
+import { IPostData } from '../../dtos/IPostData';
 
 import logo from '../../assets/logo.png';
 
@@ -17,19 +18,12 @@ import {
   Actions,
   LikeButton,
 } from './styles';
-interface IPostData {
-  conteudo_post: string;
-  has_liked: boolean;
-  id_post: string;
-  foto_post?: string;
-  foto_autor?: string;
-  id_usuario: string;
-  nome_autor: string;
+interface IPostProps extends IPostData {
   handleLike?(id_post: string): void;
   shouldNavigateOnHeaderClick?: boolean;
 }
 
-const Post: React.FC<IPostData> = ({ children, handleLike, shouldNavigateOnHeaderClick = true,...props }) => {
+const Post: React.FC<IPostProps> = ({ children, handleLike, shouldNavigateOnHeaderClick = true,...props }) => {
   const { 
     foto_autor, nome_autor, conteudo_post, foto_post, id_usuario, has_liked, id_post
   } = props;

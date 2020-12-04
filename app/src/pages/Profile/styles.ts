@@ -44,7 +44,7 @@ export const ProfilePhoto = styled.Image`
   background-color: #fcfcfc;
   position: absolute;
   top: -60px;
-  left: 36px;
+  left: 12px;
 `;
 
 export const Username = styled.Text`

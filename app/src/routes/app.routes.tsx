@@ -22,6 +22,20 @@ const AppRouter: React.FC = () => {
       }}
     >
       <Tabs.Screen 
+        name="Feed" 
+        component={FeedRoutes} 
+        options={{
+          tabBarIcon: ({ focused }) => <Feather name="home" size={28} color={focused ? '#739E82' : '#d4d4d4'} />,
+          tabBarLabel: () => (
+            <Text style={{
+              fontSize: 16,
+              fontFamily: 'Poppins_300Light',
+              color: '#131813',
+            }}>Posts</Text>
+          ),
+        }}
+      />
+      <Tabs.Screen 
         name="Recipes" 
         component={Recipes} 
         options={{
@@ -35,20 +49,7 @@ const AppRouter: React.FC = () => {
           ),
         }}
       />
-      <Tabs.Screen 
-        name="Feed" 
-        component={FeedRoutes} 
-        options={{
-          tabBarIcon: ({ focused }) => <Feather name="file-text" size={28} color={focused ? '#739E82' : '#d4d4d4'} />,
-          tabBarLabel: () => (
-            <Text style={{
-              fontSize: 16,
-              fontFamily: 'Poppins_300Light',
-              color: '#131813',
-            }}>Posts</Text>
-          ),
-        }}
-      />
+      
       <Tabs.Screen 
         name="Profile"
         component={ProfileRoutes} 

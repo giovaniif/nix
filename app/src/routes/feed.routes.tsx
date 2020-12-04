@@ -3,6 +3,7 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 
 import Feed from '../pages/Feed';
 import OtherUser from '../pages/OtherUser';
+import CreatePost from '../pages/CreatePost';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const Routes: React.FC = () => {
     >
       <Stack.Screen name="Feed" component={Feed} />
       <Stack.Screen name="OtherUser" component={OtherUser} />
+      <Stack.Screen name="CreatePost" component={CreatePost} />
     </Stack.Navigator>
   );
 };

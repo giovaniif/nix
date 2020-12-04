@@ -1,59 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, Text, RefreshControl, ToastAndroid, ActivityIndicator } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import { api } from '../../client/api';
 import { useAuth } from '../../hooks/auth';
+import { usePosts } from '../../hooks/posts';
+import { IPostData } from '../../dtos/IPostData';
 
 import AppHeader from '../../components/AppHeader';
 import Post from '../../components/Post';
 
-import { Container, Content } from './styles';
-import { post } from 'superagent';
-
-interface IPostData {
-  conteudo_post: string;
-  has_liked: boolean;
-  id_post: string;
-  foto_post?: string;
-  foto_user?: string;
-  id_usuario: string;
-  nome_autor: string;
-}
+import { Container, Content, PostButton } from './styles';
 
 const Feed: React.FC = () => {
-  const { token, signOut, user } = useAuth();
+  const { token } = useAuth();
+  const { isLoading, posts, setPosts } = usePosts();
+  const { navigate } = useNavigation();
 
-  const [posts, setPosts] = useState<IPostData[]>([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    async function loadPosts() {
-      try {
-        setIsLoading(true);
-
-        const { data } = await api.get('post', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
-
-        if (data.data.length) {
-
-          setPosts(data.data.reverse().filter((post: IPostData) => {
-            if (post.id_usuario !== user.id) {
-              return post;
-            }
-          }));
-        }
-
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-        console.log(err);
-      }
-    }
-
-    loadPosts();
-  }, [token, user]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -153,6 +118,10 @@ const Feed: React.FC = () => {
         ) : (
           <ActivityIndicator color="#348952" size={48} />
         )}
+
+        <PostButton style={{ elevation: 3 }} onPress={() => navigate('CreatePost')}>
+          <Feather name="edit" size={24} color="#fafafa" />
+        </PostButton>
       </Content>
     </Container>
   )

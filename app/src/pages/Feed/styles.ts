@@ -17,3 +17,17 @@ export const Content = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+export const PostButton = styled.TouchableOpacity`
+  height: 54px;
+  width: 54px;
+  border-radius: 27px;
+  background: #2C5530;
+
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+`;

@@ -7,18 +7,9 @@ import logoImage from '../../assets/invertedLogo.png';
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../client/api';
 import { IUserDTO } from '../../dtos/IUserDTO';
+import { IPostData } from '../../dtos/IPostData';
 
 import Post from '../../components/Post';
-
-interface IPostData {
-  conteudo_post: string;
-  has_liked: boolean;
-  id_post: string;
-  foto_post?: string;
-  foto_user?: string;
-  id_usuario: string;
-  nome_autor: string;
-}
 
 import { 
   Container,

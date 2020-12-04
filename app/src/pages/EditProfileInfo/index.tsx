@@ -3,7 +3,6 @@ import { View, ToastAndroid, Image, Keyboard } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useAuth } from '../../hooks/auth';
 import { api } from '../../client/api';
