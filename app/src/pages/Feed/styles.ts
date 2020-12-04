@@ -12,7 +12,7 @@ export const Container = styled.View`
 export const Content = styled.View`
   flex: 1;
   background: #fafafa;
-  padding: 18px 24px;
+  padding: 18px;
 
   justify-content: center;
   align-items: center;

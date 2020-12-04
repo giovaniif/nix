@@ -5,17 +5,23 @@ import { api } from '../../client/api';
 import { useAuth } from '../../hooks/auth';
 
 import AppHeader from '../../components/AppHeader';
+import Post from '../../components/Post';
 
 import { Container, Content } from './styles';
+import { post } from 'superagent';
 
 interface IPostData {
   conteudo_post: string;
   has_liked: boolean;
   id_post: string;
+  foto_post?: string;
+  foto_user?: string;
+  id_usuario: string;
+  nome_autor: string;
 }
 
 const Feed: React.FC = () => {
-  const { token } = useAuth();
+  const { token, signOut, user } = useAuth();
 
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -31,7 +37,12 @@ const Feed: React.FC = () => {
         });
 
         if (data.data.length) {
-          setPosts(data.data.reverse());
+
+          setPosts(data.data.reverse().filter((post: IPostData) => {
+            if (post.id_usuario !== user.id) {
+              return post;
+            }
+          }));
         }
 
         setIsLoading(false);
@@ -42,7 +53,7 @@ const Feed: React.FC = () => {
     }
 
     loadPosts();
-  }, [token]);
+  }, [token, user]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -72,15 +83,69 @@ const Feed: React.FC = () => {
     }
   }, [token, posts]);
 
+  const handleLike = useCallback(async (id_post) => {
+    const foundPost = posts.find(post => post.id_post === id_post);
+
+    if (!foundPost) {
+      return;
+    }
+
+    const newPosts = posts.map(post => {
+      if (post.id_post === id_post) {
+        return {
+          ...post,
+          has_liked: !post.has_liked,
+        }
+      }
+
+      return post;
+    })
+
+    setPosts([...newPosts]);
+
+    try {
+      if (!foundPost.has_liked) {
+        await api.post('post/like', { post_id: foundPost.id_post }, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+      } else {
+        await api.delete(`post/like?id=${foundPost.id_post}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+      }
+    } catch (err) {
+      console.log(err);
+      const fixedPosts = newPosts.map(post => {
+        if (post.id_post === id_post) {
+          return {
+            ...post,
+            has_liked: !post.has_liked,
+          }
+        }
+  
+        return post;
+      })
+  
+      setPosts([...fixedPosts]);
+    }
+
+  }, [posts, token]);
+
   return (
     <Container>
       <AppHeader />
       <Content>
         {!isLoading ? posts.length > 0 ? (
-          <FlatList 
+          <FlatList
+            showsVerticalScrollIndicator={false}
             data={posts}
             keyExtractor={(item) => item.id_post}
-            renderItem={({ item }) => <Text>{item.conteudo_post}</Text>}
+            renderItem={({ item }) => (
+              <Post
+                handleLike={handleLike}
+                {...item}
+              />
+            )}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           />
         ) : (
