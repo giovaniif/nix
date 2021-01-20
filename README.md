@@ -43,4 +43,4 @@ If there is anything you would like to change and/or add to this project. I woul
 
 <h2>💬 Contact</h2>
 
-Made with 💜 by Giovani Farias. 👋 [Get in touch!](<(https://www.linkedin.com/in/giovani-ricco-farias-b97316186/)>)
+Made with 💜 by Giovani Farias. 👋 [Get in touch!](https://www.linkedin.com/in/giovani-ricco-farias-b97316186/)
